@@ -116,4 +116,5 @@ void main()
 
         setAddr2Lcd(0);
         writeLineLcd(adcBuffer); 
+    }
 }
