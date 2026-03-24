@@ -20,7 +20,6 @@ void initLcd();
 void cmdLcd(unsigned char);
 void dataLcd(unsigned char);
 void writeLineLcd(char*);
-void homeLcd();
 void clearLcd();
 void setAddr1Lcd(unsigned char);
 void setAddr2Lcd(unsigned char);

@@ -3,7 +3,7 @@
 
 void initAdc();
 unsigned int sampleAdc();
-void setChannelAdc(unsigned char);
+void setChannelAdc(unsigned char chan);
 
 #endif	/* ADC_H */
 

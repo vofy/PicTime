@@ -81,12 +81,6 @@ void writeLineLcd(char* data)
 	}
 }
 
-// return home ddram = 0
-void homeLcd()
-{
-	cmdLcd(0x02);			// return home
-}
-
 // clear display
 void clearLcd()
 {

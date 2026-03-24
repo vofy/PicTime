@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "lcd.h"
 #include "adc.h"
+#include "display.h"
 
 _CONFIG1 (0x3F7F)	// Watchdog off, JTAG off, Code protection off
 _CONFIG2 (0xFABD)	// primary osc on, XT without PLL (crystal)
@@ -40,35 +41,17 @@ void main()
     initAdc();
 	TRISA &= 0b1111111100000000;	//0xFF00
   	TRIS_LED = 0;
-  	sec = 0;
-  	min = 0;
-  	hr = 0;
+    
+    int curr_time = 0;
     
     bool mode = true;
 
 	while(1)
     {
-        
         if(IFS0bits.T2IF == 1)
         {
-            //odsud to do vypnuti trva 27.5ms
-            LED = 1;
-            if(++sec>59)    //2.8 us
-            {
-                    sec = 0;
-                    if(++min>59)
-                    {
-                        min = 0;
-                    if(++hr>23)
-                        hr = 0;
-                    }  
-            }
-
-            sprintf(charBuffer,"cas   %02d:%02d:%02d",hr, min, sec);    //21.7 ms
-            setAddr1Lcd(0);  //3.9 ms
-            writeLineLcd(charBuffer);   //1.46 ms
-
-            LED = 0;
+            curr_time = curr_time + 1 ? curr_time < 86400 : 0; 
+            displayUpdateTime(curr_time);
 
             IFS0bits.T2IF = 0;
             
@@ -81,7 +64,7 @@ void main()
             {
                 setChannelAdc(4);
                 temp = (((3.222*sampleAdc())-500)/10);
-                sprintf(adcBuffer, "temp  %d", temp); //21.7 ms
+                sprintf(adcBuffer, "temp  %d", temp);
             }
         }
             
@@ -92,10 +75,10 @@ void main()
             resultAd >>= 2;
             LATA = resultAd;
 
-            sprintf(adcBuffer, "pot   %d", resultAd); //21.7 ms
+            sprintf(adcBuffer, "pot   %d", resultAd);
         }
 
         setAddr2Lcd(0);
-        writeLineLcd(adcBuffer); //1.46 ms 
+        writeLineLcd(adcBuffer);
     }
 }
