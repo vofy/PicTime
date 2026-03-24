@@ -1,3 +1,10 @@
+/* 
+ * File:   lcd.h
+ * Author: 247085
+ *
+ * Created on March 17, 2026, 12:15 PM
+ */
+
 #ifndef LCD_H
 #define	LCD_H
 
@@ -26,4 +33,7 @@ void setAddr1Lcd(unsigned char);
 void setAddr2Lcd(unsigned char);
 void writeStringLcd(char*, unsigned char);
 
+
+
 #endif	/* LCD_H */
+

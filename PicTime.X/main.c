@@ -1,3 +1,12 @@
+//*****************************************************************************
+// project:	timer2_real_time  
+// describe: 	on LCD is displayed real time
+// source:	main.c
+// MCU:		PIC24FJ128GA010, Explorer16
+//*****************************************************************************
+// actual mcu:	p24FJ128GA010.h
+// addres:	C:\Program Files (x86)\Microchip\xc16\v1.25\support\PIC24F\h
+
 #include <p24fxxxx.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -16,17 +25,21 @@ char adcBuffer[17];
 unsigned int resultAd;
 unsigned int temp;
 
+
+
 // interrupt TMR2
 void __attribute__((interrupt, no_auto_psv)) _T2Interrupt()
 {
   	IFS0bits.T2IF = 1;
 }
 
+
+
 // set TMR2 for 8MHz
 void initTimer2()
 {
 	T2CON = 0x0030;			// fosc/2=> 0.25us*256=64us 
- 	PR2 = 15625;          	// 64us*15625 =1s
+ 	PR2 = 15625;            // 64us*15625 =1s
  	T2CONbits.TON = 1;		// Timer1 on
  	IFS0bits.T2IF = 0;		// interrupt flag
  	IEC0bits.T2IE = 0;		// interrupt on
@@ -64,9 +77,11 @@ void main()
                     }  
             }
 
-            sprintf(charBuffer,"cas   %02d:%02d:%02d",hr, min, sec);    //21.7 ms
-            setAddr1Lcd(0);  //3.9 ms
-            writeLineLcd(charBuffer);   //1.46 ms
+
+
+            sprintf(charBuffer,"cas   %02d:%02d:%02d",hr, min, sec); 
+            setAddr1Lcd(0);  
+            writeLineLcd(charBuffer);  
 
             LED = 0;
 
@@ -81,7 +96,8 @@ void main()
             {
                 setChannelAdc(4);
                 temp = (((3.222*sampleAdc())-500)/10);
-                sprintf(adcBuffer, "temp  %d", temp); //21.7 ms
+                sprintf(adcBuffer, "temp  %d", temp); 
+
             }
         }
             
@@ -92,10 +108,12 @@ void main()
             resultAd >>= 2;
             LATA = resultAd;
 
-            sprintf(adcBuffer, "pot   %d", resultAd); //21.7 ms
+            sprintf(adcBuffer, "pot   %d", resultAd); 
         }
 
+
+
+
         setAddr2Lcd(0);
-        writeLineLcd(adcBuffer); //1.46 ms 
-    }
+        writeLineLcd(adcBuffer); 
 }

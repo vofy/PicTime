@@ -1,10 +1,17 @@
+
+//*****************************************************************************
+// lcd.c
+//*****************************************************************************
+
 #include <p24fxxxx.h>
 #include <xc.h>
+
 #include "lcd.h"
 
 // define timer C30
 #define FCY 8000000			// must be set in Hz
 #include <libpic30.h>
+
 
 
 void initLcd()
@@ -119,4 +126,5 @@ void writeStringLcd(char* data, unsigned char nmr)
 	for(i=0; i<nmr; i++)
 		dataLcd(*data++);
 }
+
 
