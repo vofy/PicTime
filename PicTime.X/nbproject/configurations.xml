@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>adc.h</itemPath>
       <itemPath>lcd.h</itemPath>
+      <itemPath>rtcc.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -22,6 +23,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>adc.c</itemPath>
       <itemPath>lcd.c</itemPath>
+      <itemPath>rtcc.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -197,6 +199,9 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
+      <ICD3PlatformTool>
+        <property key="firmware.download.all" value="false"/>
+      </ICD3PlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>
