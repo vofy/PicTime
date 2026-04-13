@@ -1,9 +1,11 @@
 #include <xc.h>
 #define FCY 8000000			// must be set in Hz
 #include <libpic30.h>
+#include <stdbool.h>
+#include <string.h>
 #include "lcd.h"
 
-void initLcd()
+void lcd_init()
 {
 	//ports LCD
 	LCD_DATA &= 0xFF00;
@@ -29,19 +31,20 @@ void initLcd()
   	__delay_us(150);
 
 	// 3rd
-	cmdLcd(0x38);		// function set: 8bit,2lines display,5x8dots/char
-	cmdLcd(0x0C);		// display On/Off: display On, cursor Off,Blink Off
-	cmdLcd(0x06);		// entry mode set:DDRAM++
-	cmdLcd(0x01);		// clear display
+	lcd_cmd(0x38);		// function set: 8bit,2lines display,5x8dots/char
+	lcd_cmd(0x0C);		// display On/Off: display On, cursor Off,Blink Off
+	lcd_cmd(0x06);		// entry mode set:DDRAM++
+	lcd_cmd(0x01);		// clear display
 }
 
-void cmdLcd(unsigned char cmd)
+void lcd_cmd(unsigned char cmd)
 {
 	LCD_RW = 0;
 	LCD_RS = 0;	
 	LCD_DATA &= 0xFF00;
 	LCD_DATA |= cmd;
 	LCD_CLK;
+    
 	if(cmd&0xFC)
 	{
   		__delay_us(50);	
@@ -52,7 +55,7 @@ void cmdLcd(unsigned char cmd)
 	}
 }
 
-void dataLcd(unsigned char data)
+void lcd_write_char(unsigned char data)
 {
 	LCD_RW = 0;
 	LCD_RS = 1;
@@ -63,57 +66,26 @@ void dataLcd(unsigned char data)
 	__delay_us(40);
 }
 
-
-void writeLineLcd(char* data)
+void lcd_home()
 {
-  	unsigned char i = 0;
-
-	for(i=0; i<16; i++)
-	{
-	  	if(*data!=0x00)
-	    		dataLcd(*data++);
-	  	else
-	    		dataLcd(' ');
-	}
+	lcd_cmd(0x02);			// return home
 }
 
-// return home ddram = 0
-void homeLcd()
+void lcd_clear()
 {
-	cmdLcd(0x02);			// return home
+	lcd_cmd(0x01);			// return home
 }
 
-// clear display
-void clearLcd()
+void lcd_write_at(unsigned int row, unsigned int col, const char *str, bool blank_fill)
 {
-	cmdLcd(0x01);			// return home
+    if (row > 1 || col > 15)
+        return;
+
+    unsigned int addr = (row == 1 ? 0x40 : 0x00) + col;
+    lcd_cmd(0x80 | addr);
+
+    unsigned int str_len = blank_fill ? 16 : (16 - col);
+
+    for (unsigned int i = 0; i < str_len; i++)
+        lcd_write_char(*str ? *str++ : ' ');
 }
-
-// address of 1st line 0 - 15
-void setAddr1Lcd(unsigned char col)
-{
-	if(col>15)
-		return;
-	cmdLcd(col|0x80);
-}
-
-// address of 2nd line 0 - 15
-void setAddr2Lcd(unsigned char col)
-{
-	if(col>15)
-		return;
-	col += 0x40;	
-	cmdLcd(col|0x80);
-}
-
-// lenght string , nmr 1-16
-void writeStringLcd(char* data, unsigned char nmr)
-{
-	if(nmr>16)
-		return;
-	unsigned char i;	
-	for(i=0; i<nmr; i++)
-		dataLcd(*data++);
-}
-
-

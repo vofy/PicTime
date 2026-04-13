@@ -13,7 +13,7 @@ static int dec2bcd(int dec)
     return ((dec / 10) << 4) | (dec % 10);
 }
 
-void initRtcc(void)
+void rtcc_init(void)
 {
     // Enable secondary oscillator
     CLKDIV = 0;
@@ -26,7 +26,7 @@ void initRtcc(void)
     RCFGCALbits.RTCWREN = 0;
 }
 
-void rtcc_get_tm(struct tm *t)
+void rtcc_get_time(struct tm *t)
 {
     unsigned int val;
 
@@ -58,7 +58,7 @@ void rtcc_get_tm(struct tm *t)
     mktime(t);
 }
 
-void rtcc_set_tm(const struct tm *t)
+void rtcc_set_time(const struct tm *t)
 {
     unsigned int val;
 

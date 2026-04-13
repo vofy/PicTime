@@ -16,17 +16,12 @@
 #define LCD_CLK	{LCD_E = 1; Nop(); Nop(); Nop(); LCD_E = 0;}
 
 // functions							
-void initLcd();
-void cmdLcd(unsigned char);
-void dataLcd(unsigned char);
-void writeLineLcd(char*);
-void homeLcd();
-void clearLcd();
-void setAddr1Lcd(unsigned char);
-void setAddr2Lcd(unsigned char);
-void writeStringLcd(char*, unsigned char);
-
-
+void lcd_init();
+void lcd_cmd(unsigned char);
+void lcd_write_char(unsigned char);
+void lcd_home();
+void lcd_clear();
+void lcd_write_at(unsigned int row, unsigned int col, const char *str, bool blank_fill);
 
 #endif	/* LCD_H */
 

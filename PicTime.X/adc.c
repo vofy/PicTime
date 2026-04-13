@@ -14,7 +14,7 @@ void initAdc()
 }
 
 
-unsigned int sampleAdc()
+unsigned int adc_sample()
 {
 	AD1CON1bits.SAMP = 1;   
 	while(!AD1CON1bits.DONE);          
@@ -22,7 +22,7 @@ unsigned int sampleAdc()
 }
 
 
-void setChannelAdc(unsigned char chan)
+void adc_set_channel(unsigned char chan)
 {
 	if(chan >16)
 		return;
