@@ -1,18 +1,7 @@
-
-//*****************************************************************************
-// lcd.c
-//*****************************************************************************
-
-#include <p24fxxxx.h>
 #include <xc.h>
-
-#include "lcd.h"
-
-// define timer C30
 #define FCY 8000000			// must be set in Hz
 #include <libpic30.h>
-
-
+#include "lcd.h"
 
 void initLcd()
 {

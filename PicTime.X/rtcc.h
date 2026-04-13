@@ -2,12 +2,9 @@
 #define	RTCC_H
 
 void initRtcc();
-void writeTimeRtcc(unsigned char* );
-void writeDateRtcc(unsigned char* );
-void readTimeRtcc(unsigned char* );
-void readDateRtcc(unsigned char* );
-void readTimeCharRtcc(char* );
-void readDateCharRtcc(char* );
-void readTimeTimehRtcc(struct tm *t);
+void rtcc_get_tm(struct tm *t);
+void rtcc_set_tm(const struct tm *t);
+const char *rtcc_weekday_str(const struct tm *t);
+int rtcc_week_number(const struct tm *t);
 
 #endif	/* RTCC_H */

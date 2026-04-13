@@ -1,10 +1,3 @@
-/* 
- * File:   lcd.h
- * Author: 247085
- *
- * Created on March 17, 2026, 12:15 PM
- */
-
 #ifndef LCD_H
 #define	LCD_H
 
@@ -16,8 +9,8 @@
 #define LCD_RS			LATBbits.LATB15
 #define LCD_TRIS_RS		TRISBbits.TRISB15
 
-#define LCD_DATA            LATE
-#define LCD_TRISDATA		TRISE
+#define LCD_DATA        LATE
+#define LCD_TRISDATA	TRISE
 
 // macros
 #define LCD_CLK	{LCD_E = 1; Nop(); Nop(); Nop(); LCD_E = 0;}
