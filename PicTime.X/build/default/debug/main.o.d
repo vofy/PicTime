@@ -1,7 +1,9 @@
-build/default/debug/main.o: main.c lcd.h rtcc.h adc.h
+build/default/debug/main.o: main.c state.h screen.h lcd.h rtcc.h
+
+state.h:
+
+screen.h:
 
 lcd.h:
 
 rtcc.h:
-
-adc.h:

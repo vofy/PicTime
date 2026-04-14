@@ -1,0 +1,35 @@
+#ifndef STATE_H
+#define	STATE_H
+
+typedef enum {
+    STATE_CLOCK,
+    STATE_STOPWATCH,
+    STATE_STOPWATCH_RUN,
+    STATE_STOPWATCH_LAP,
+    STATE_STOPWATCH_STOP,
+    STATE_ALARM,
+    STATE_ALARM_ENABLED,
+    STATE_ALARM_HOUR,
+    STATE_ALARM_MIN,
+    STATE_ALARM_VOLUME,
+    STATE_OPTIONS,
+    STATE_OPTIONS_TIME,
+    STATE_OPTIONS_TIME_HOUR,
+    STATE_OPTIONS_TIME_MIN,
+    STATE_OPTIONS_TIME_SEC,
+    STATE_OPTIONS_DATE,
+    STATE_OPTIONS_DATE_DAY,
+    STATE_OPTIONS_DATE_MONTH,
+    STATE_OPTIONS_DATE_YEAR,
+    STATE_MAX
+} State;
+
+typedef enum {KEY_NONE, KEY_ENTER, KEY_ESC, KEY_PREV, KEY_NEXT} Key;
+
+void state_init();
+void state_handle_event(Key key);
+State state_get_current();
+void state_set_current(State state);
+
+#endif	/* STATE_H */
+

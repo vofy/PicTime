@@ -1,7 +1,9 @@
-build/default/production/main.o: main.c lcd.h rtcc.h adc.h
+build/default/production/main.o: main.c state.h rtcc.h lcd.h screen.h
 
-lcd.h:
+state.h:
 
 rtcc.h:
 
-adc.h:
+lcd.h:
+
+screen.h:

@@ -1,7 +1,11 @@
 #include <xc.h>
 #include <time.h>
 #include <stdlib.h>
-#include "rtcc.h"
+#include <stdbool.h>
+
+static time_t rtcc_stopwatch_start = 0;
+static time_t rtcc_stopwatch_elapsed = 0;
+static bool rtcc_stopwatch_running = false;
 
 static int bcd2dec(unsigned int bcd)
 {
@@ -11,6 +15,57 @@ static int bcd2dec(unsigned int bcd)
 static int dec2bcd(int dec)
 {
     return ((dec / 10) << 4) | (dec % 10);
+}
+
+void rtcc_stopwatch_run()
+{
+    if (rtcc_stopwatch_running)
+        return;
+
+    struct tm t;
+    rtcc_get_time(&t);
+
+    rtcc_stopwatch_start = mktime(&t);
+    rtcc_stopwatch_running = true;
+}
+
+void rtcc_stopwatch_stop()
+{
+    if (!rtcc_stopwatch_running)
+        return;
+
+    struct tm t;
+    rtcc_get_time(&t);
+
+    time_t now = mktime(&t);
+    rtcc_stopwatch_elapsed += now - rtcc_stopwatch_start;
+
+    rtcc_stopwatch_start = 0;
+    rtcc_stopwatch_running = false;
+}
+
+void rtcc_stopwatch_reset()
+{
+    rtcc_stopwatch_elapsed = 0;
+    rtcc_stopwatch_start = 0;
+    rtcc_stopwatch_running = false;
+}
+
+time_t rtcc_stopwatch_time()
+{
+    if (!rtcc_stopwatch_running)
+        return rtcc_stopwatch_elapsed;
+
+    struct tm t;
+    rtcc_get_time(&t);
+
+    time_t now = mktime(&t);
+    return rtcc_stopwatch_elapsed + (now - rtcc_stopwatch_start);
+}
+
+bool rtcc_stopwatch_is_running()
+{
+    return rtcc_stopwatch_running;
 }
 
 void rtcc_init(void)
@@ -58,7 +113,7 @@ void rtcc_get_time(struct tm *t)
     mktime(t);
 }
 
-void rtcc_set_time(const struct tm *t)
+void rtcc_set_time(struct tm *t)
 {
     unsigned int val;
 
@@ -87,14 +142,14 @@ void rtcc_set_time(const struct tm *t)
     RCFGCALbits.RTCWREN = 0;
 }
 
-const char *rtcc_weekday_str(const struct tm *t)
+const char *rtcc_weekday_str(struct tm *t)
 {
     static const char *days[] = { "Ne", "Po", "Ut", "St", "Ct", "Pa", "So" };
 
     return days[t->tm_wday];
 }
 
-int rtcc_week_number(const struct tm *t)
+const int rtcc_week_number(struct tm *t)
 {
     struct tm tmp = *t;
     time_t ts = mktime(&tmp);

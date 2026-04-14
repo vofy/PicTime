@@ -1,3 +1,1 @@
-build/default/production/rtcc.o: rtcc.c rtcc.h
-
-rtcc.h:
+build/default/production/rtcc.o: rtcc.c
