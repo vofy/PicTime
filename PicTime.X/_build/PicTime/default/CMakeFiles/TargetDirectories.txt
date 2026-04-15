@@ -1,5 +1,0 @@
-C:/Users/vofy/Projects/PicTime/PicTime.X/_build/PicTime/default/CMakeFiles/PicTime_default_default_XC16_compile.dir
-C:/Users/vofy/Projects/PicTime/PicTime.X/_build/PicTime/default/CMakeFiles/PicTime_default_image_cVwh67nv.dir
-C:/Users/vofy/Projects/PicTime/PicTime.X/_build/PicTime/default/CMakeFiles/PicTime_default_Bin2Hex.dir
-C:/Users/vofy/Projects/PicTime/PicTime.X/_build/PicTime/default/CMakeFiles/edit_cache.dir
-C:/Users/vofy/Projects/PicTime/PicTime.X/_build/PicTime/default/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,53 @@
+build/
+dist/
+debug/
+out/
+_build/
+
+# MPLAB X generated
+.generated_files/
+
+# CMake
+cmake/PicTime/default/.generated/
+_build/**/CMakeFiles/
+_build/**/cmake_install.cmake
+_build/**/CMakeCache.txt
+
+# Object files
+*.o
+*.d
+*.elf
+*.hex
+*.map
+*.lst
+*.sym
+
+# MPLAB specific
+*.mcw
+*.mcs
+*.mcp
+
+# MPLAB X IDE
+nbproject/private/
+
+# VS Code
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Pack-generated / toolchain cache
+*.xml
+memoryfile.xml
+
+# Ignore absolute build paths accidentally generated
+_build/**/C_/
