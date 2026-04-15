@@ -46,7 +46,6 @@ Thumbs.db
 *.swp
 
 # Pack-generated / toolchain cache
-*.xml
 memoryfile.xml
 
 # Ignore absolute build paths accidentally generated
