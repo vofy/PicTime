@@ -1,92 +1,83 @@
 #include <stdbool.h>
 
+#include "../drivers/buttons.h"
+#include "../core/stopwatch.h"
 #include "state.h"
 #include "views.h"
-#include "../core/stopwatch.h"
-#include "../core/options.h"
 
-static State current_state = STATE_CLOCK;
+static State current_state;
 
-typedef struct {
-    void (*enter)(void);
-    void (*draw)(void);
-    State (*handle)(Key key);
-} StateHandler;
-
-static void enter_clock(void)     {}
-static void enter_stopwatch(void) {}
-static void enter_alarm(void)     {}
-static void enter_options(void)   {}
-
-static State handle_clock(Key key)
+static State handle_clock(Button button)
 {
-    switch (key)
-    {
-        case KEY_PREV: return STATE_OPTIONS;
-        case KEY_NEXT: return STATE_STOPWATCH;
-        default:       return STATE_CLOCK;
-    }
+    if (button == BUTTON_4)
+        return STATE_STOPWATCH;
+
+    return STATE_CLOCK;
 }
 
-static State handle_stopwatch(Key key)
+static State handle_stopwatch(Button button)
 {
-    switch (key)
+    switch (button)
     {
-        case KEY_PREV: return STATE_CLOCK;
-        case KEY_NEXT: return STATE_ALARM;
+        case BUTTON_4:
+            return STATE_ALARM;
+
+        case BUTTON_1:
+        case BUTTON_2:
+            stopwatch_state_handle_key(button);
+            break;
 
         default:
-            stopwatch_state_handle_key(key);
-            return STATE_STOPWATCH;
+            break;
     }
+
+    return STATE_STOPWATCH;
 }
 
-static State handle_alarm(Key key)
+static State handle_alarm(Button button)
 {
-    switch (key)
-    {
-        case KEY_PREV: return STATE_STOPWATCH;
-        case KEY_NEXT: return STATE_OPTIONS;
-        default:       return STATE_ALARM;
-    }
+    if (button == BUTTON_4)
+        return STATE_OPTIONS;
+
+    return STATE_ALARM;
 }
 
-static State handle_options(Key key)
+static State handle_options(Button button)
 {
-    switch (key)
-    {
-        case KEY_PREV: return STATE_ALARM;
-        case KEY_NEXT: return STATE_CLOCK;
-        default:       return STATE_OPTIONS;
-    }
+
+    if (button == BUTTON_4)
+        return STATE_CLOCK;
+
+    return STATE_OPTIONS;
 }
+
+typedef struct {
+    void (*draw)(void);
+    State (*handle)(Button button);
+} StateHandler;
 
 static StateHandler handlers[] =
 {
     [STATE_CLOCK] =
     {
-        .enter = enter_clock,
         .draw  = draw_screen_clock,
         .handle = handle_clock
     },
 
     [STATE_STOPWATCH] =
     {
-        .enter = enter_stopwatch,
         .draw  = draw_screen_stopwatch,
         .handle = handle_stopwatch
     },
 
     [STATE_ALARM] =
     {
-        .enter = enter_alarm,
         .draw  = draw_screen_alarm,
         .handle = handle_alarm
     },
 
     [STATE_OPTIONS] =
     {
-        .enter = enter_options,
         .draw  = draw_screen_options,
         .handle = handle_options
     }
@@ -96,11 +87,7 @@ void state_init(void)
 {
     current_state = STATE_CLOCK;
 
-    if (handlers[current_state].enter)
-        handlers[current_state].enter();
-
-    if (handlers[current_state].draw)
-        handlers[current_state].draw();
+    handlers[current_state].draw();
 }
 
 void state_set_current(State next)
@@ -109,12 +96,7 @@ void state_set_current(State next)
         return;
 
     current_state = next;
-
-    if (handlers[current_state].enter)
-        handlers[current_state].enter();
-
-    if (handlers[current_state].draw)
-        handlers[current_state].draw();
+    handlers[current_state].draw();
 }
 
 State state_get_current(void)
@@ -122,18 +104,12 @@ State state_get_current(void)
     return current_state;
 }
 
-void state_handle_event(Key key)
+void state_handle_event(Button button)
 {
-    if (key == KEY_NONE)
-        return;
-
-    if (!handlers[current_state].handle)
-        return;
-
-    State next = handlers[current_state].handle(key);
+    State next = handlers[current_state].handle(button);
 
     if (next != current_state)
-    {
         state_set_current(next);
-    }
+    
+    handlers[current_state].draw();
 }

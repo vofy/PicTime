@@ -37,11 +37,10 @@ void draw_screen_clock(void)
 
 void draw_screen_stopwatch(void)
 {
-    StopwatchState stopwatch_state = stopwatch_state_get_current();
-    uint32_t diff = stopwatch_get_time();
+    uint32_t time = stopwatch_get_time();
     char state[7] = "\0";
     
-    switch(stopwatch_state)
+    switch(stopwatch_state_get_current())
     {
         case SW_RUN:
             strcpy(state, " [RUN]");
@@ -55,15 +54,17 @@ void draw_screen_stopwatch(void)
         default:
             break;
     }
-    
-    sprintf(lineBuffer, "STOPWATCH %s", state);
+    sprintf(lineBuffer, "Stopwatch %s", state);
     lcd_write_line(0, lineBuffer);
+
+    uint32_t hours   =  time / 3600000UL;
+    uint32_t minutes = (time % 3600000UL) / 60000UL;
+    uint32_t seconds = (time % 60000UL) / 1000UL;
+    uint32_t centis  = (time % 1000UL) / 10UL;   // hundredths of a second
+
+    sprintf(lineBuffer, "%02lu:%02lu:%02lu.%02lu",
+        hours, minutes, seconds, centis);
     
-    sprintf(lineBuffer, "%02d:%02d:%02d", 
-        (int)(diff / 3600), 
-        (int)((diff % 3600) / 60), 
-        (int)(diff % 60)
-    );
     lcd_write_line(1, lineBuffer);
 }
 

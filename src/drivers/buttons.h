@@ -1,9 +1,14 @@
-#ifndef INPUTS_H
-#define	INPUTS_H
+#ifndef BUTTONS_H
+#define BUTTONS_H
 
-typedef enum {KEY_NONE, KEY_ENTER, KEY_ESC, KEY_PREV, KEY_NEXT} Key;
+typedef enum {
+    BUTTON_1,
+    BUTTON_2,
+    BUTTON_3,
+    BUTTON_4,
+} Button;
 
-Key read_key();
+void buttons_tick(void);
+void buttons_check_state(void);
 
-#endif	/* INPUTS_H */
-
+#endif

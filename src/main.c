@@ -2,6 +2,7 @@
 #include "drivers/rtcc.h"
 #include "drivers/lcd.h"
 #include "drivers/buttons.h"
+#include "drivers/interrupts.h"
 #include "ui/state.h"
 #include "ui/views.h"
 #include "core/stopwatch.h"
@@ -12,15 +13,6 @@ _CONFIG2 (0xF99F)
 static void led_init()
 {
     TRISAbits.TRISA0 = 0;
-}
-
-static void timer_init()
-{
-    T1CON = 0x0020;     // Fosc/2, prescaler 1:64
-    PR1 = 31250;        // 500 ms
-    T1CONbits.TON = 1;
-    IFS0bits.T1IF = 0;
-    IEC0bits.T1IE = 0;
 }
 
 static void init()
@@ -50,10 +42,7 @@ int main(void)
     
     while (1)
     {
-        Key key = read_key();
-        
-        if (key != KEY_NONE)
-            state_handle_event(key);
+        buttons_check_state();
 
         // Screen needs redraw
         switch(state_get_current()) {

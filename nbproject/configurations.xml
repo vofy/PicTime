@@ -13,6 +13,7 @@
           <itemPath>src/drivers/rtcc.h</itemPath>
           <itemPath>src/drivers/buttons.h</itemPath>
           <itemPath>src/drivers/lcd.h</itemPath>
+          <itemPath>src/drivers/interrupts.h</itemPath>
         </logicalFolder>
         <logicalFolder name="ui" displayName="ui" projectFiles="true">
           <itemPath>src/ui/state.h</itemPath>
@@ -42,6 +43,7 @@
           <itemPath>src/drivers/buttons.c</itemPath>
           <itemPath>src/drivers/lcd.c</itemPath>
           <itemPath>src/drivers/rtcc.c</itemPath>
+          <itemPath>src/drivers/interrupts.c</itemPath>
         </logicalFolder>
         <logicalFolder name="ui" displayName="ui" projectFiles="true">
           <itemPath>src/ui/state.c</itemPath>

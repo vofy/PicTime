@@ -13,12 +13,9 @@ typedef enum {
 } StopwatchState;
 
 StopwatchState stopwatch_state_get_current(void);
-
-void stopwatch_tick_1ms(void);
-void stopwatch_state_handle_key(Key key);
-
+void stopwatch_tick(void);
+void stopwatch_state_handle_key(Button button);
 uint32_t stopwatch_get_time(void);
-
 bool stopwatch_is_running(void);
 
 #endif

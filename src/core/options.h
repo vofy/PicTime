@@ -7,5 +7,5 @@ typedef enum {
     OPT_DATE
 } OptionsState;
 
-#endif	/* OPTIONS_H */
+#endif
 

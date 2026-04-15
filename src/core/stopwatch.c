@@ -1,41 +1,34 @@
-#define FCY 8000000
-
 #include <xc.h>
 #include <libpic30.h>
+#include <stdint.h>
+#include <stdbool.h>
+
 #include "stopwatch.h"
+#include "../drivers/buttons.h"
+#include "../ui/views.h"
 
 static StopwatchState current_state = SW_IDLE;
 
 static volatile uint32_t elapsed_ms = 0;
 static volatile bool running = false;
 
-void __attribute__ ( ( interrupt, no_auto_psv ) ) _T1Interrupt ( )
-{
-    elapsed_ms++;
-    IFS0bits.T1IF = 0;
-}
-
-StopwatchState stopwatch_state_get_current()
+StopwatchState stopwatch_state_get_current(void)
 {
     return current_state;
 }
 
-void stopwatch_tick_1ms(void)
+void stopwatch_tick(void)
 {
     if (running)
-    {
-        __builtin_disi(0x3FFF);
         elapsed_ms++;
-        __builtin_disi(0x0000);
-    }
 }
 
-void stopwatch_state_handle_key(Key key)
+void stopwatch_state_handle_key(Button button)
 {
     switch (current_state)
     {
         case SW_IDLE:
-            if (key == KEY_ENTER)
+            if (button == BUTTON_1)
             {
                 running = true;
                 current_state = SW_RUN;
@@ -43,29 +36,29 @@ void stopwatch_state_handle_key(Key key)
             break;
 
         case SW_RUN:
-            if (key == KEY_ENTER)
+            if (button == BUTTON_1)
             {
                 running = false;
                 current_state = SW_STOP;
             }
-            else if (key == KEY_ESC)
+            else if (button == BUTTON_2)
             {
                 current_state = SW_LAP;
             }
             break;
 
         case SW_LAP:
-            if (key == KEY_ENTER)
+            if (button == BUTTON_1)
                 current_state = SW_RUN;
             break;
 
         case SW_STOP:
-            if (key == KEY_ENTER)
+            if (button == BUTTON_1)
             {
                 running = true;
                 current_state = SW_RUN;
             }
-            else if (key == KEY_ESC)
+            else if (button == BUTTON_2)
             {
                 elapsed_ms = 0;
                 current_state = SW_IDLE;
