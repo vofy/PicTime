@@ -57,8 +57,8 @@ void buttons_check_state(void)
     {
         bool now = buttons_state[i];
         bool before = buttons_last[i];
-
-        // detect rising edge (press event)
+        
+        // detect press event
         if (!before && now)
         {
             state_handle_event((Button)(BUTTON_1 + i));

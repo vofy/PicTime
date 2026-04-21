@@ -2,84 +2,44 @@
 
 #include "../drivers/buttons.h"
 #include "../core/stopwatch.h"
+#include "../core/alarm.h"
+#include "../core/options.h"
 #include "state.h"
 #include "views.h"
 
 static State current_state;
 
-static State handle_clock(Button button)
-{
-    if (button == BUTTON_4)
-        return STATE_STOPWATCH;
-
-    return STATE_CLOCK;
-}
-
-static State handle_stopwatch(Button button)
-{
-    switch (button)
-    {
-        case BUTTON_4:
-            return STATE_ALARM;
-
-        case BUTTON_1:
-        case BUTTON_2:
-            stopwatch_state_handle_key(button);
-            break;
-
-        default:
-            break;
-    }
-
-    return STATE_STOPWATCH;
-}
-
-static State handle_alarm(Button button)
-{
-    if (button == BUTTON_4)
-        return STATE_OPTIONS;
-
-    return STATE_ALARM;
-}
-
-static State handle_options(Button button)
-{
-
-    if (button == BUTTON_4)
-        return STATE_CLOCK;
-
-    return STATE_OPTIONS;
-}
-
 typedef struct {
     void (*draw)(void);
-    State (*handle)(Button button);
+    void (*handle)(Button button);
 } StateHandler;
+
+static void clock_handle_key(Button button) {};
 
 static StateHandler handlers[] =
 {
     [STATE_CLOCK] =
     {
         .draw  = draw_screen_clock,
-        .handle = handle_clock
+        .handle = clock_handle_key
     },
 
     [STATE_STOPWATCH] =
     {
         .draw  = draw_screen_stopwatch,
-        .handle = handle_stopwatch
+        .handle = stopwatch_handle_key
     },
 
     [STATE_ALARM] =
     {
         .draw  = draw_screen_alarm,
-        .handle = handle_alarm
+        .handle = alarm_handle_key
     },
 
     [STATE_OPTIONS] =
     {
         .draw  = draw_screen_options,
-        .handle = handle_options
+        .handle = options_handle_key
     }
 };
 
@@ -105,11 +65,11 @@ State state_get_current(void)
 }
 
 void state_handle_event(Button button)
-{
-    State next = handlers[current_state].handle(button);
-
-    if (next != current_state)
-        state_set_current(next);
+{    
+    if (button == BUTTON_4)
+        current_state = (current_state + 1) % STATE_STATES;
+    else
+        handlers[current_state].handle(button);
     
     handlers[current_state].draw();
 }

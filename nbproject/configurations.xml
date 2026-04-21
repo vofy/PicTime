@@ -8,6 +8,7 @@
         <logicalFolder name="core" displayName="core" projectFiles="true">
           <itemPath>src/core/options.h</itemPath>
           <itemPath>src/core/stopwatch.h</itemPath>
+          <itemPath>src/core/alarm.h</itemPath>
         </logicalFolder>
         <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
           <itemPath>src/drivers/rtcc.h</itemPath>
@@ -38,6 +39,7 @@
         <logicalFolder name="core" displayName="core" projectFiles="true">
           <itemPath>src/core/options.c</itemPath>
           <itemPath>src/core/stopwatch.c</itemPath>
+          <itemPath>src/core/alarm.c</itemPath>
         </logicalFolder>
         <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
           <itemPath>src/drivers/buttons.c</itemPath>

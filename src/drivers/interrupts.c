@@ -13,17 +13,17 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt(void)
 
 void timer_init(void)
 {
-    T1CON = 0x0000;          // reset
+    CLKDIVbits.RCDIV = 0;      // No FRC division (Fcy = 16MHz)
 
-    T1CONbits.TCKPS = 0b10;  // prescaler 1:64
-    T1CONbits.TCS = 0;       // internal clock (Fcy)
+    T1CON            = 0x0000; // Reset Timer 1 configuration
+    T1CONbits.TCS    = 0;      // Internal clock (Fcy)
+    T1CONbits.TCKPS  = 0b01;   // Prescaler 1:8
 
-    PR1 = 124;               // 1 ms period
+    TMR1             = 0;      // Reset timer counter
+    PR1              = 1999;   // 2000 ticks * 0.5us = exactly 1ms
+    
+    IFS0bits.T1IF    = 0;      // Clear Timer 1 interrupt flag
+    IEC0bits.T1IE    = 1;      // Enable Timer 1 interrupt
 
-    TMR1 = 0;
-
-    IFS0bits.T1IF = 0;       // clear flag
-    IEC0bits.T1IE = 1;       // ENABLE interrupt
-
-    T1CONbits.TON = 1;       // start timer
+    T1CONbits.TON    = 1;      // Start Timer 1
 }

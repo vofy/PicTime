@@ -23,7 +23,7 @@ void stopwatch_tick(void)
         elapsed_ms++;
 }
 
-void stopwatch_state_handle_key(Button button)
+void stopwatch_handle_key(Button button)
 {
     switch (current_state)
     {
@@ -36,12 +36,12 @@ void stopwatch_state_handle_key(Button button)
             break;
 
         case SW_RUN:
-            if (button == BUTTON_1)
+            if (button == BUTTON_2)
             {
                 running = false;
                 current_state = SW_STOP;
             }
-            else if (button == BUTTON_2)
+            else if (button == BUTTON_3)
             {
                 current_state = SW_LAP;
             }
@@ -50,6 +50,10 @@ void stopwatch_state_handle_key(Button button)
         case SW_LAP:
             if (button == BUTTON_1)
                 current_state = SW_RUN;
+            else if (button == BUTTON_2)
+                current_state = SW_STOP;
+            else if (button == BUTTON_3)
+                current_state = SW_LAP;
             break;
 
         case SW_STOP:

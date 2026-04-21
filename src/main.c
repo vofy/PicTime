@@ -6,6 +6,7 @@
 #include "ui/state.h"
 #include "ui/views.h"
 #include "core/stopwatch.h"
+#include "core/options.h"
 
 _CONFIG1 (0x3F7F)
 _CONFIG2 (0xF99F)
@@ -50,11 +51,14 @@ int main(void)
                 draw_screen_clock();
                 break;
 
-            case STATE_STOPWATCH: {
+            case STATE_STOPWATCH:
                 if (stopwatch_state_get_current() == SW_RUN)
                     draw_screen_stopwatch();
                 break;
-            }
+            
+            case STATE_OPTIONS:
+                draw_screen_options();
+                break;
 
             default:
                 break;

@@ -5,7 +5,8 @@ typedef enum {
     STATE_CLOCK,
     STATE_STOPWATCH,
     STATE_ALARM,
-    STATE_OPTIONS
+    STATE_OPTIONS,
+    STATE_STATES
 } State;
 
 void state_init(void);
