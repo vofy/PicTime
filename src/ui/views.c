@@ -74,7 +74,7 @@ void draw_screen_stopwatch(void)
 
 void draw_screen_alarm(void)
 {
-    struct tm time = alarm_get_time();
+    const AlarmSettings *alarm_settings = alarm_get_settings();
     
     char alarm_en[11];
     char hr[6];
@@ -82,15 +82,16 @@ void draw_screen_alarm(void)
     char day_en[16];
     char lineBuffer[17] = "\0";
 
-    AlarmState state = alarm_state_get_current();
-    const char* state_str = alarm_is_day_enabled(time.tm_wday) ? "ON" : "OFF";
+    AlarmState state = alarm_get_state_current();
+    WeekDay selected = alarm_get_weekday_selected();
+    const char* day_state_str = alarm_is_day_enabled(selected) ? "ON" : "OFF";
 
-    sprintf(alarm_en, (state == ALARM_ENABLED) ? "<%s>" : "%s", alarm_is_enabled() ? "ENABLED" : "DISABLED");
-    sprintf(hr,       (state == ALARM_HOUR) ? "<%02d>" : "%02d", time.tm_hour);
-    sprintf(min,      (state == ALARM_MIN) ? "<%02d>" : "%02d", time.tm_min);
-    sprintf(day_en,   (state == ALARM_DAYS) ? "<%s-%s>" : "%s-%s", weekday_strings[time.tm_wday], state_str);
+    sprintf(alarm_en, (state == ALARM_ENABLED) ? "<%s>" : "%s", alarm_settings->enabled ? "ENABLED" : "DISABLED");
+    sprintf(hr,       (state == ALARM_HOUR) ? "<%02d>" : "%02d", alarm_settings->time.hour);
+    sprintf(min,      (state == ALARM_MIN) ? "<%02d>" : "%02d", alarm_settings->time.min);
+    sprintf(day_en,   (state == ALARM_DAYS) ? "<%s-%s>" : "%s-%s", weekday_strings[selected], day_state_str);
 
-    sprintf(lineBuffer, "ALARM %-10s", alarm_en);
+    sprintf(lineBuffer, "Alarm %-10s", alarm_en);
     lcd_write_line(0, lineBuffer);
 
     sprintf(lineBuffer, "%s:%s %-11s", hr, min, day_en);

@@ -3,18 +3,25 @@
 #include "drivers/lcd.h"
 #include "drivers/buttons.h"
 #include "drivers/interrupts.h"
+#include "drivers/led.h"
+#include "drivers/eeprom.h"
 #include "ui/state.h"
 #include "ui/views.h"
 #include "core/stopwatch.h"
+#include "core/alarm.h"
 #include "core/options.h"
 
-_CONFIG1 (0x3F7F)
-_CONFIG2 (0xF99F)
+// CONFIG1
+#pragma config JTAGEN = OFF     // JTAG Port Enable (Disabled)
+#pragma config ICS = PGx1       // Comm Channel Select (PGC1/PGD1)
+#pragma config FWDTEN = OFF     // Watchdog Timer Enable (Disabled)
+#pragma config WDTPS = PS32768  // Watchdog Timer Postscaler (1:32,768)
 
-static void led_init()
-{
-    TRISAbits.TRISA0 = 0;
-}
+// CONFIG2
+#pragma config IESO = ON        // Internal External Switch Over Mode (Enabled)
+#pragma config FNOSC = FRCPLL   // Oscillator Select (Fast RC Oscillator with PLL)
+#pragma config FCKSM = CSECMD   // Clock Switching and Monitor (Clock switching enabled, Fail-Safe Clock Monitor disabled)
+#pragma config POSCMOD = NONE   // Primary Oscillator Select (Disabled)
 
 static void init()
 {
@@ -22,14 +29,16 @@ static void init()
     rtcc_init();
     timer_init();
     led_init();
+    eeprom_init();
     state_init();
+    alarm_init();
 }
 
 int main(void)
 {
     init();
 
-    struct tm time = {
+    struct tm start_time = {
         .tm_year = 2026,
         .tm_mon  = 3,
         .tm_mday = 19,
@@ -39,7 +48,7 @@ int main(void)
         .tm_wday = 3
     };
 
-    rtcc_set_time(&time);
+    rtcc_set_time(&start_time);
     
     while (1)
     {
@@ -64,6 +73,7 @@ int main(void)
                 break;
         }
     }
+        
 
     return 0;
 }

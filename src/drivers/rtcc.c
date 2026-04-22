@@ -1,7 +1,8 @@
 #include <xc.h>
-#include <time.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include "rtcc.h"
+
+const char* weekday_strings[7] = { "Ne", "Po", "Ut", "St", "Ct", "Pa", "So" };
 
 static int bcd2dec(unsigned int bcd)
 {
@@ -87,11 +88,34 @@ void rtcc_set_time(struct tm *t)
     RCFGCALbits.RTCWREN = 0;
 }
 
+void rtcc_set_alarm(const HrMin *t)
+{
+    __builtin_write_RTCWEN();
+    ALCFGRPTbits.ALRMEN = 0; 
+    
+    // minutes + seconds
+    ALCFGRPTbits.ALRMPTR = 0b00;
+    ALRMVAL = (dec2bcd(t->min) << 8); 
+
+    // weekday + hours
+    ALCFGRPTbits.ALRMPTR = 0b01;
+    ALRMVAL = dec2bcd(t->hour);
+
+    ALCFGRPTbits.AMASK = 0b0010; // Daily match
+    ALCFGRPTbits.CHIME = 1;
+    RCFGCALbits.RTCWREN = 0;
+}
+
+void rtcc_set_alarm_enabled(bool enabled)
+{
+    __builtin_write_RTCWEN();
+    ALCFGRPTbits.ALRMEN = enabled ? 1 : 0;
+    RCFGCALbits.RTCWREN = 0;
+}
+
 const char *rtcc_weekday_str(struct tm *t)
 {
-    static const char *days[] = { "Ne", "Po", "Ut", "St", "Ct", "Pa", "So" };
-
-    return days[t->tm_wday];
+    return weekday_strings[t->tm_wday];
 }
 
 const int rtcc_week_number(struct tm *t)

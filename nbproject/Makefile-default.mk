@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/core/options.c src/core/stopwatch.c src/drivers/buttons.c src/drivers/lcd.c src/drivers/rtcc.c src/drivers/interrupts.c src/ui/state.c src/ui/views.c src/main.c src/core/alarm.c
+SOURCEFILES_QUOTED_IF_SPACED=src/core/options.c src/core/stopwatch.c src/core/alarm.c src/drivers/buttons.c src/drivers/lcd.c src/drivers/rtcc.c src/drivers/interrupts.c src/ui/state.c src/ui/views.c src/main.c src/drivers/led.c src/drivers/eeprom.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/drivers/interrupts.o ${OBJECTDIR}/src/ui/state.o ${OBJECTDIR}/src/ui/views.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/core/alarm.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/core/options.o.d ${OBJECTDIR}/src/core/stopwatch.o.d ${OBJECTDIR}/src/drivers/buttons.o.d ${OBJECTDIR}/src/drivers/lcd.o.d ${OBJECTDIR}/src/drivers/rtcc.o.d ${OBJECTDIR}/src/drivers/interrupts.o.d ${OBJECTDIR}/src/ui/state.o.d ${OBJECTDIR}/src/ui/views.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/src/core/alarm.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/core/alarm.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/drivers/interrupts.o ${OBJECTDIR}/src/ui/state.o ${OBJECTDIR}/src/ui/views.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/drivers/led.o ${OBJECTDIR}/src/drivers/eeprom.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/core/options.o.d ${OBJECTDIR}/src/core/stopwatch.o.d ${OBJECTDIR}/src/core/alarm.o.d ${OBJECTDIR}/src/drivers/buttons.o.d ${OBJECTDIR}/src/drivers/lcd.o.d ${OBJECTDIR}/src/drivers/rtcc.o.d ${OBJECTDIR}/src/drivers/interrupts.o.d ${OBJECTDIR}/src/ui/state.o.d ${OBJECTDIR}/src/ui/views.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/src/drivers/led.o.d ${OBJECTDIR}/src/drivers/eeprom.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/drivers/interrupts.o ${OBJECTDIR}/src/ui/state.o ${OBJECTDIR}/src/ui/views.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/core/alarm.o
+OBJECTFILES=${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/core/alarm.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/drivers/interrupts.o ${OBJECTDIR}/src/ui/state.o ${OBJECTDIR}/src/ui/views.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/drivers/led.o ${OBJECTDIR}/src/drivers/eeprom.o
 
 # Source Files
-SOURCEFILES=src/core/options.c src/core/stopwatch.c src/drivers/buttons.c src/drivers/lcd.c src/drivers/rtcc.c src/drivers/interrupts.c src/ui/state.c src/ui/views.c src/main.c src/core/alarm.c
+SOURCEFILES=src/core/options.c src/core/stopwatch.c src/core/alarm.c src/drivers/buttons.c src/drivers/lcd.c src/drivers/rtcc.c src/drivers/interrupts.c src/ui/state.c src/ui/views.c src/main.c src/drivers/led.c src/drivers/eeprom.c
 
 
 
@@ -100,6 +100,12 @@ ${OBJECTDIR}/src/core/stopwatch.o: src/core/stopwatch.c  .generated_files/flags/
 	@${RM} ${OBJECTDIR}/src/core/stopwatch.o.d 
 	@${RM} ${OBJECTDIR}/src/core/stopwatch.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/stopwatch.c  -o ${OBJECTDIR}/src/core/stopwatch.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/stopwatch.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/fa322b896bd70146bcacc155b7939aeda7a081d3 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/drivers/buttons.o: src/drivers/buttons.c  .generated_files/flags/default/faf674228d0cc4d2c21fe918ad90de37bd92e3e6 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
@@ -143,11 +149,17 @@ ${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/f71ffef8148b
 	@${RM} ${OBJECTDIR}/src/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/main.c  -o ${OBJECTDIR}/src/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/fa322b896bd70146bcacc155b7939aeda7a081d3 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/core" 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+${OBJECTDIR}/src/drivers/led.o: src/drivers/led.c  .generated_files/flags/default/5ab4b461e76ccbdc37c6281db25862a458d09130 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/led.c  -o ${OBJECTDIR}/src/drivers/led.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/led.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/drivers/eeprom.o: src/drivers/eeprom.c  .generated_files/flags/default/d2f21b1bac8ac66ce45fb5636837666cbba9cb41 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/eeprom.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/eeprom.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/eeprom.c  -o ${OBJECTDIR}/src/drivers/eeprom.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/eeprom.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 else
 ${OBJECTDIR}/src/core/options.o: src/core/options.c  .generated_files/flags/default/cc6560b6834f47474f03162fba6a5a75e80f69f4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
@@ -161,6 +173,12 @@ ${OBJECTDIR}/src/core/stopwatch.o: src/core/stopwatch.c  .generated_files/flags/
 	@${RM} ${OBJECTDIR}/src/core/stopwatch.o.d 
 	@${RM} ${OBJECTDIR}/src/core/stopwatch.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/stopwatch.c  -o ${OBJECTDIR}/src/core/stopwatch.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/stopwatch.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/c560da654865e95be243fbbb6ae543ea78e98662 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/drivers/buttons.o: src/drivers/buttons.c  .generated_files/flags/default/83b81fa94ec676a5a88d330da9db7eb645713e0c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
@@ -204,11 +222,17 @@ ${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/316423bc2eeb
 	@${RM} ${OBJECTDIR}/src/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/main.c  -o ${OBJECTDIR}/src/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/main.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/c560da654865e95be243fbbb6ae543ea78e98662 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/core" 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+${OBJECTDIR}/src/drivers/led.o: src/drivers/led.c  .generated_files/flags/default/970664260a633ccfde87ab66d01a507adc70936 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/led.c  -o ${OBJECTDIR}/src/drivers/led.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/led.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/drivers/eeprom.o: src/drivers/eeprom.c  .generated_files/flags/default/f4776f1839bbd74b6ec90646fc596fc2b5b4958c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/eeprom.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/eeprom.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/eeprom.c  -o ${OBJECTDIR}/src/drivers/eeprom.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/eeprom.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 

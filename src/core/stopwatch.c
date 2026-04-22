@@ -42,9 +42,7 @@ void stopwatch_handle_key(Button button)
                 current_state = SW_STOP;
             }
             else if (button == BUTTON_3)
-            {
                 current_state = SW_LAP;
-            }
             break;
 
         case SW_LAP:

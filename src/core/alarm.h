@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include "../drivers/buttons.h"
+#include "../drivers/rtcc.h"
 
 typedef enum {
     ALARM_ENABLED = 0,
@@ -22,14 +23,26 @@ typedef enum {
     DAY_THU,
     DAY_FRI,
     DAY_SAT,
-    DAYS_IN_WEEK
+    DAYS_ALL
 } WeekDay;
 
-extern const char* const weekday_strings[DAYS_IN_WEEK];
-AlarmState alarm_state_get_current(void);
-struct tm alarm_get_time(void);
-bool alarm_is_enabled(void);
+typedef struct {
+    bool enabled;
+    HrMin time;
+    bool days_enabled[DAYS_ALL];
+} AlarmSettings;
+
+void alarm_init(void);
+
+AlarmState alarm_get_state_current(void);
+WeekDay alarm_get_weekday_selected(void);
+const AlarmSettings* alarm_get_settings(void);
+
 bool alarm_is_day_enabled(WeekDay day);
+bool alarm_is_enabled(void);
+bool alarm_is_triggered(void);
+
+void alarm_set_triggered(bool state);
 void alarm_day_toggle(WeekDay day);
 void alarm_handle_key(Button button);
 
