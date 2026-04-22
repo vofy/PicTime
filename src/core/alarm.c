@@ -115,11 +115,11 @@ void alarm_handle_key(Button button)
         case ALARM_DAYS:
             if (button == BUTTON_1) 
             {
-                alarm_settings.days_enabled[weekday_selected] = !alarm_settings.days_enabled[weekday_selected];
+                weekday_selected = (weekday_selected + 1) % DAYS_ALL;
             }
             else if (button == BUTTON_2) 
             {
-                weekday_selected = (weekday_selected + 1) % DAYS_ALL;
+                alarm_settings.days_enabled[weekday_selected] = !alarm_settings.days_enabled[weekday_selected];
             }
             break;
 
