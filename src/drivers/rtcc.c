@@ -97,7 +97,7 @@ void rtcc_set_alarm(const HrMin *t)
     ALCFGRPTbits.ALRMPTR = 0b00;
     ALRMVAL = (dec2bcd(t->min) << 8); 
 
-    // weekday + hours
+    // hours
     ALCFGRPTbits.ALRMPTR = 0b01;
     ALRMVAL = dec2bcd(t->hour);
 

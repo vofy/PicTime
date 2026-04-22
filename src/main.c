@@ -1,4 +1,5 @@
 #include <xc.h>
+#include "drivers/system.h"
 #include "drivers/rtcc.h"
 #include "drivers/lcd.h"
 #include "drivers/buttons.h"
@@ -23,20 +24,9 @@
 #pragma config FCKSM = CSECMD   // Clock Switching and Monitor (Clock switching enabled, Fail-Safe Clock Monitor disabled)
 #pragma config POSCMOD = NONE   // Primary Oscillator Select (Disabled)
 
-static void init()
-{
-    lcd_init();
-    rtcc_init();
-    timer_init();
-    led_init();
-    eeprom_init();
-    state_init();
-    alarm_init();
-}
-
 int main(void)
 {
-    init();
+    device_init();
 
     struct tm start_time = {
         .tm_year = 2026,

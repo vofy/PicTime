@@ -1,58 +1,16 @@
 #include "eeprom.h"
 #include <xc.h>
+#include <stdint.h>
 
-// ==========================
-// CONFIG ? VERIFY THIS
-// ==========================
-
-// SPI2 (adjust if needed)
-#define SPIBUF      SPI2BUF
-#define SPISTATbits SPI2STATbits
-#define SPICON1     SPI2CON1
-#define SPICON1bits SPI2CON1bits
-
-// Moved from RB15 to RB14 to resolve conflict with LCD_RS
-#define EEPROM_CS_LAT  LATBbits.LATB14
-#define EEPROM_CS_TRIS TRISBbits.TRISB14
-
-#define CS_LOW()   (EEPROM_CS_LAT = 0)
-#define CS_HIGH()  (EEPROM_CS_LAT = 1)
-
-// ==========================
-// COMMANDS
-// ==========================
-
-#define CMD_WREN  0x06
-#define CMD_RDSR  0x05
-#define CMD_WRITE 0x02
-#define CMD_READ  0x03
-
-#define STATUS_WIP 0x01
-
-// ==========================
-// SPI (SAFE)
-// ==========================
 
 static uint8_t spi_transfer(uint8_t data)
 {
-    uint32_t timeout = 100000;
-
-    SPIBUF = data;
-
-    while (!SPISTATbits.SPIRBF)
-    {
-        if (--timeout == 0)
-            return 0xFF; // fail-safe
-    }
-
-    return SPIBUF;
+    SPI2BUF = data;
+    while (!SPI2STATbits.SPIRBF);
+    return SPI2BUF;
 }
 
-// ==========================
-// EEPROM STATUS
-// ==========================
-
-static uint8_t eeprom_ready(void)
+static uint8_t eeprom_read_status(void)
 {
     uint8_t status;
 
@@ -61,17 +19,13 @@ static uint8_t eeprom_ready(void)
     status = spi_transfer(0xFF);
     CS_HIGH();
 
-    return !(status & STATUS_WIP);
+    return status;
 }
 
 static void eeprom_wait_ready(void)
 {
-    while (!eeprom_ready());
+    while (eeprom_read_status() & STATUS_WIP);
 }
-
-// ==========================
-// INIT
-// ==========================
 
 void eeprom_init(void)
 {
@@ -79,23 +33,28 @@ void eeprom_init(void)
     EEPROM_CS_TRIS = 0;
     CS_HIGH();
 
-    // SPI config (Mode 0)
-    SPICON1 = 0;
-    SPICON1bits.MSTEN = 1;
-    SPICON1bits.CKP = 0;
-    SPICON1bits.CKE = 1;
-    SPICON1bits.SMP = 0;
+    // SPI2 pins
+    TRISGbits.TRISG6 = 0; // SCK2
+    TRISGbits.TRISG7 = 1; // SDI2
+    TRISGbits.TRISG8 = 0; // SDO2
 
-    // Clock: Fcy / 16 (safe)
-    SPICON1bits.PPRE = 0b10;
-    SPICON1bits.SPRE = 0b110;
+    SPI2STATbits.SPIEN = 0;
 
-    SPISTATbits.SPIEN = 1;
+    SPI2CON1 = 0;
+    SPI2CON1bits.MSTEN = 1;
+
+    SPI2CON1bits.CKP = 0;
+    SPI2CON1bits.CKE = 1;
+
+    SPI2CON1bits.SMP = 0;
+    SPI2CON1bits.MODE16 = 0;
+
+    SPI2CON1bits.PPRE = 0b10;
+    SPI2CON1bits.SPRE = 0b110;
+
+    SPI2STATbits.SPIROV = 0;
+    SPI2STATbits.SPIEN = 1;
 }
-
-// ==========================
-// BYTE ACCESS
-// ==========================
 
 uint8_t eeprom_read_byte(uint16_t addr)
 {
@@ -117,12 +76,14 @@ void eeprom_write_byte(uint16_t addr, uint8_t data)
 {
     eeprom_wait_ready();
 
-    // WREN
+    // Write enable
     CS_LOW();
     spi_transfer(CMD_WREN);
     CS_HIGH();
 
-    // WRITE
+    __delay_us(1); // small safety delay
+
+    // Write
     CS_LOW();
     spi_transfer(CMD_WRITE);
     spi_transfer(addr >> 8);
@@ -131,13 +92,9 @@ void eeprom_write_byte(uint16_t addr, uint8_t data)
     CS_HIGH();
 }
 
-// ==========================
-// MULTI-BYTE
-// ==========================
-
 void eeprom_read(uint16_t addr, void *buf, size_t len)
 {
-    uint8_t *p = (uint8_t *)buf;
+    uint8_t *p = buf;
 
     eeprom_wait_ready();
 
@@ -146,19 +103,19 @@ void eeprom_read(uint16_t addr, void *buf, size_t len)
     spi_transfer(addr >> 8);
     spi_transfer(addr & 0xFF);
 
-    for (size_t i = 0; i < len; i++)
-        p[i] = spi_transfer(0xFF);
+    while (len--)
+        *p++ = spi_transfer(0xFF);
 
     CS_HIGH();
 }
 
 void eeprom_write(uint16_t addr, const void *buf, size_t len)
 {
-    const uint8_t *p = (const uint8_t *)buf;
+    const uint8_t *p = buf;
 
     while (len > 0)
     {
-        uint8_t page_offset = addr % 64;
+        uint8_t page_offset = addr & 0x3F;
         uint8_t chunk = 64 - page_offset;
 
         if (chunk > len)
@@ -166,12 +123,14 @@ void eeprom_write(uint16_t addr, const void *buf, size_t len)
 
         eeprom_wait_ready();
 
-        // WREN
+        // Write enable
         CS_LOW();
         spi_transfer(CMD_WREN);
         CS_HIGH();
 
-        // WRITE PAGE
+        __delay_us(1);
+
+        // Write page
         CS_LOW();
         spi_transfer(CMD_WRITE);
         spi_transfer(addr >> 8);

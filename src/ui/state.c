@@ -18,6 +18,12 @@ static void clock_handle_key(Button button) {};
 
 static StateHandler handlers[] =
 {
+    [STATE_OPTIONS] =
+    {
+        .draw  = draw_screen_options,
+        .handle = options_handle_key
+    },
+    
     [STATE_CLOCK] =
     {
         .draw  = draw_screen_clock,
@@ -34,12 +40,6 @@ static StateHandler handlers[] =
     {
         .draw  = draw_screen_alarm,
         .handle = alarm_handle_key
-    },
-
-    [STATE_OPTIONS] =
-    {
-        .draw  = draw_screen_options,
-        .handle = options_handle_key
     }
 };
 

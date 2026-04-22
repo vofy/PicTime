@@ -17,6 +17,7 @@
           <itemPath>src/drivers/interrupts.h</itemPath>
           <itemPath>src/drivers/led.h</itemPath>
           <itemPath>src/drivers/eeprom.h</itemPath>
+          <itemPath>src/drivers/system.h</itemPath>
         </logicalFolder>
         <logicalFolder name="ui" displayName="ui" projectFiles="true">
           <itemPath>src/ui/state.h</itemPath>
@@ -50,6 +51,7 @@
           <itemPath>src/drivers/interrupts.c</itemPath>
           <itemPath>src/drivers/led.c</itemPath>
           <itemPath>src/drivers/eeprom.c</itemPath>
+          <itemPath>src/drivers/system.c</itemPath>
         </logicalFolder>
         <logicalFolder name="ui" displayName="ui" projectFiles="true">
           <itemPath>src/ui/state.c</itemPath>

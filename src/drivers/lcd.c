@@ -1,8 +1,4 @@
 #include <xc.h>
-#define FCY 8000000			// must be set in Hz
-#include <libpic30.h>
-#include <stdbool.h>
-#include <string.h>
 #include "lcd.h"
 
 void lcd_init()

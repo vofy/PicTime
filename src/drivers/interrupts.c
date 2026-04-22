@@ -2,6 +2,27 @@
 
 #include "../drivers/buttons.h"
 #include "../core/stopwatch.h"
+#include "../core/alarm.h"
+#include "../drivers/led.h"
+
+void alarm_blink_service(void)
+{
+    static uint16_t blink_cnt = 0;
+    
+    if (alarm_is_triggered())
+    {
+        if (++blink_cnt >= 200) // Toggle every 200ms
+        {
+            blink_cnt = 0;
+            for (int i = 0; i < LED_ALL; i++) led_toggle(i);
+            LATDbits.LATD0 ^= 1; // Pulse buzzer on RD0
+        }
+    }
+    else
+    {
+        blink_cnt = 0;
+    }
+}
 
 void __attribute__((interrupt, auto_psv)) _T1Interrupt(void)
 {
@@ -9,12 +30,13 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt(void)
 
     buttons_tick();
     stopwatch_tick();
+    alarm_tick();
+    
+    alarm_blink_service();
 }
 
 void timer_init(void)
 {
-    CLKDIVbits.RCDIV = 0;      // No FRC division (Fcy = 16MHz)
-
     T1CON            = 0x0000; // Reset Timer 1 configuration
     T1CONbits.TCS    = 0;      // Internal clock (Fcy)
     T1CONbits.TCKPS  = 0b01;   // Prescaler 1:8

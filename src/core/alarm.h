@@ -3,9 +3,10 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <time.h>
 #include "../drivers/buttons.h"
 #include "../drivers/rtcc.h"
+
+#define ALARM_MAGIC 0xCAFE
 
 typedef enum {
     ALARM_ENABLED = 0,
@@ -27,6 +28,7 @@ typedef enum {
 } WeekDay;
 
 typedef struct {
+    uint16_t magic;
     bool enabled;
     HrMin time;
     bool days_enabled[DAYS_ALL];
@@ -45,5 +47,7 @@ bool alarm_is_triggered(void);
 void alarm_set_triggered(bool state);
 void alarm_day_toggle(WeekDay day);
 void alarm_handle_key(Button button);
+void alarm_set_time_and_state(void);
+void alarm_tick(void);
 
 #endif

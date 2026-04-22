@@ -1,6 +1,9 @@
 #ifndef LCD_H
 #define	LCD_H
 
+#include <xc.h>
+#include "system.h"
+
 #define LCD_E			LATDbits.LATD4	
 #define LCD_TRIS_E		TRISDbits.TRISD4
 #define LCD_RW			LATDbits.LATD5

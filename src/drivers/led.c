@@ -3,8 +3,8 @@
 
 void led_init(void)
 {
-    TRISA = (TRISA & 0xFF80) | 0x0080; // RA0-RA6 as output, RA7 as input (shared with BUTTON_3)
-    LATA &= 0xFF80;  
+    TRISA &= ~0x00FF; // RA0-RA7 as output (D3-D10)
+    LATA &= 0xFF00;  
 }
 
 void led_set(Led led, bool state)
@@ -22,4 +22,12 @@ void led_toggle(Led led)
     if (led >= LED_ALL) return;
 
     LATA ^= (1 << led); // XOR
+}
+
+void led_set_all(bool state)
+{
+    if (state)
+        LATA |= 0x00FF; // Set RA0-RA7
+    else
+        LATA &= ~0x00FF; // Clear RA0-RA7
 }

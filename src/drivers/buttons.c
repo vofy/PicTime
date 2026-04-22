@@ -5,14 +5,19 @@
 #include "buttons.h"
 #include "../ui/state.h"
 
-#define S3 PORTDbits.RD6
-#define S6 PORTDbits.RD7
-#define S5 PORTAbits.RA7
-#define S4 PORTDbits.RD13
-
 static bool buttons_state[4] = {false, false, false, false};   // debounced state
 static bool buttons_last[4]  = {false, false, false, false};   // previous state
 static uint8_t cnt[4] = {0};                                   // debounce counters
+static uint16_t repeat_cnt[4] = {0};                           // counters for auto-repeat
+static bool repeat_mode[4] = {false};                          // flag for repeat phase
+
+void buttons_init(void)
+{
+    TRISDbits.TRISD6 = 1;  // S3
+    TRISDbits.TRISD7 = 1;  // S6
+    TRISAbits.TRISA7 = 1;  // S5
+    TRISDbits.TRISD13 = 1; // S4
+}
 
 void buttons_tick(void)
 {
@@ -47,6 +52,28 @@ void buttons_tick(void)
                 buttons_state[i] = button_i_pressed;
                 cnt[i] = 0;
             }
+        }
+    }
+
+    // Process auto-repeat for held buttons
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        if (buttons_state[i])
+        {
+            repeat_cnt[i]++;
+            uint16_t threshold = repeat_mode[i] ? BUTTON_REPEAT_RATE : BUTTON_REPEAT_INITIAL;
+
+            if (repeat_cnt[i] >= threshold)
+            {
+                buttons_last[i] = false; // Reset last state to trigger a new press event
+                repeat_cnt[i] = 0;
+                repeat_mode[i] = true;
+            }
+        }
+        else
+        {
+            repeat_cnt[i] = 0;
+            repeat_mode[i] = false;
         }
     }
 }

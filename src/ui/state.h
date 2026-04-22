@@ -3,9 +3,9 @@
 
 typedef enum {
     STATE_CLOCK,
+    STATE_OPTIONS,
     STATE_STOPWATCH,
     STATE_ALARM,
-    STATE_OPTIONS,
     STATE_STATES
 } State;
 
