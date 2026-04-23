@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/core/options.c src/core/stopwatch.c src/core/alarm.c src/drivers/buttons.c src/drivers/lcd.c src/drivers/rtcc.c src/drivers/interrupts.c src/drivers/led.c src/drivers/eeprom.c src/ui/state.c src/ui/views.c src/main.c src/drivers/system.c
+SOURCEFILES_QUOTED_IF_SPACED=src/core/alarm.c src/core/clock.c src/core/options.c src/core/state.c src/core/stopwatch.c src/drivers/buttons.c src/drivers/eeprom.c src/drivers/interrupt.c src/drivers/lcd.c src/drivers/led.c src/drivers/rtcc.c src/main.c src/drivers/controller.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/core/alarm.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/drivers/interrupts.o ${OBJECTDIR}/src/drivers/led.o ${OBJECTDIR}/src/drivers/eeprom.o ${OBJECTDIR}/src/ui/state.o ${OBJECTDIR}/src/ui/views.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/drivers/system.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/core/options.o.d ${OBJECTDIR}/src/core/stopwatch.o.d ${OBJECTDIR}/src/core/alarm.o.d ${OBJECTDIR}/src/drivers/buttons.o.d ${OBJECTDIR}/src/drivers/lcd.o.d ${OBJECTDIR}/src/drivers/rtcc.o.d ${OBJECTDIR}/src/drivers/interrupts.o.d ${OBJECTDIR}/src/drivers/led.o.d ${OBJECTDIR}/src/drivers/eeprom.o.d ${OBJECTDIR}/src/ui/state.o.d ${OBJECTDIR}/src/ui/views.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/src/drivers/system.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/core/alarm.o ${OBJECTDIR}/src/core/clock.o ${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/state.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/eeprom.o ${OBJECTDIR}/src/drivers/interrupt.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/led.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/drivers/controller.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/core/alarm.o.d ${OBJECTDIR}/src/core/clock.o.d ${OBJECTDIR}/src/core/options.o.d ${OBJECTDIR}/src/core/state.o.d ${OBJECTDIR}/src/core/stopwatch.o.d ${OBJECTDIR}/src/drivers/buttons.o.d ${OBJECTDIR}/src/drivers/eeprom.o.d ${OBJECTDIR}/src/drivers/interrupt.o.d ${OBJECTDIR}/src/drivers/lcd.o.d ${OBJECTDIR}/src/drivers/led.o.d ${OBJECTDIR}/src/drivers/rtcc.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/src/drivers/controller.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/core/alarm.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/drivers/interrupts.o ${OBJECTDIR}/src/drivers/led.o ${OBJECTDIR}/src/drivers/eeprom.o ${OBJECTDIR}/src/ui/state.o ${OBJECTDIR}/src/ui/views.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/drivers/system.o
+OBJECTFILES=${OBJECTDIR}/src/core/alarm.o ${OBJECTDIR}/src/core/clock.o ${OBJECTDIR}/src/core/options.o ${OBJECTDIR}/src/core/state.o ${OBJECTDIR}/src/core/stopwatch.o ${OBJECTDIR}/src/drivers/buttons.o ${OBJECTDIR}/src/drivers/eeprom.o ${OBJECTDIR}/src/drivers/interrupt.o ${OBJECTDIR}/src/drivers/lcd.o ${OBJECTDIR}/src/drivers/led.o ${OBJECTDIR}/src/drivers/rtcc.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/drivers/controller.o
 
 # Source Files
-SOURCEFILES=src/core/options.c src/core/stopwatch.c src/core/alarm.c src/drivers/buttons.c src/drivers/lcd.c src/drivers/rtcc.c src/drivers/interrupts.c src/drivers/led.c src/drivers/eeprom.c src/ui/state.c src/ui/views.c src/main.c src/drivers/system.c
+SOURCEFILES=src/core/alarm.c src/core/clock.c src/core/options.c src/core/state.c src/core/stopwatch.c src/drivers/buttons.c src/drivers/eeprom.c src/drivers/interrupt.c src/drivers/lcd.c src/drivers/led.c src/drivers/rtcc.c src/main.c src/drivers/controller.c
 
 
 
@@ -89,11 +89,29 @@ MP_LINKER_FILE_OPTION=,--script=p24FJ128GA010.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/fa322b896bd70146bcacc155b7939aeda7a081d3 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/core/clock.o: src/core/clock.c  .generated_files/flags/default/7784c4f7f88a794992a7ee59c1d005d3a446b745 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/clock.o.d 
+	@${RM} ${OBJECTDIR}/src/core/clock.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/clock.c  -o ${OBJECTDIR}/src/core/clock.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/clock.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 ${OBJECTDIR}/src/core/options.o: src/core/options.c  .generated_files/flags/default/956665c6f569b5438357b4939ce79db0b7c330f8 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/core" 
 	@${RM} ${OBJECTDIR}/src/core/options.o.d 
 	@${RM} ${OBJECTDIR}/src/core/options.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/options.c  -o ${OBJECTDIR}/src/core/options.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/options.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/core/state.o: src/core/state.c  .generated_files/flags/default/785525c94b475eb318f95cc46a3edf8ffa785895 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/state.o.d 
+	@${RM} ${OBJECTDIR}/src/core/state.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/state.c  -o ${OBJECTDIR}/src/core/state.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/state.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/core/stopwatch.o: src/core/stopwatch.c  .generated_files/flags/default/5a6ab0d103e5c36ee1093d15620963013ce35b5c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/core" 
@@ -101,41 +119,11 @@ ${OBJECTDIR}/src/core/stopwatch.o: src/core/stopwatch.c  .generated_files/flags/
 	@${RM} ${OBJECTDIR}/src/core/stopwatch.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/stopwatch.c  -o ${OBJECTDIR}/src/core/stopwatch.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/stopwatch.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/fa322b896bd70146bcacc155b7939aeda7a081d3 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/core" 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/src/drivers/buttons.o: src/drivers/buttons.c  .generated_files/flags/default/faf674228d0cc4d2c21fe918ad90de37bd92e3e6 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
 	@${RM} ${OBJECTDIR}/src/drivers/buttons.o.d 
 	@${RM} ${OBJECTDIR}/src/drivers/buttons.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/buttons.c  -o ${OBJECTDIR}/src/drivers/buttons.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/buttons.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/lcd.o: src/drivers/lcd.c  .generated_files/flags/default/c6cac3f0b24607e154b405f568aa56e5f6f819c4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/lcd.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/lcd.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/lcd.c  -o ${OBJECTDIR}/src/drivers/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/lcd.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/rtcc.o: src/drivers/rtcc.c  .generated_files/flags/default/b438ecc7e000c3e4cdb44aeb4962f31d5ec3f213 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/rtcc.c  -o ${OBJECTDIR}/src/drivers/rtcc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/rtcc.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/interrupts.o: src/drivers/interrupts.c  .generated_files/flags/default/5909d01f5733f23de0e9c2e88052809e116ff191 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/interrupts.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/interrupts.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/interrupts.c  -o ${OBJECTDIR}/src/drivers/interrupts.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/interrupts.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/led.o: src/drivers/led.c  .generated_files/flags/default/5ab4b461e76ccbdc37c6281db25862a458d09130 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/led.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/led.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/led.c  -o ${OBJECTDIR}/src/drivers/led.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/led.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/drivers/eeprom.o: src/drivers/eeprom.c  .generated_files/flags/default/d2f21b1bac8ac66ce45fb5636837666cbba9cb41 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
@@ -143,17 +131,29 @@ ${OBJECTDIR}/src/drivers/eeprom.o: src/drivers/eeprom.c  .generated_files/flags/
 	@${RM} ${OBJECTDIR}/src/drivers/eeprom.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/eeprom.c  -o ${OBJECTDIR}/src/drivers/eeprom.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/eeprom.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/ui/state.o: src/ui/state.c  .generated_files/flags/default/18a054bcc869f3d8d1fbd22186b896f31b8bd9cd .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/ui" 
-	@${RM} ${OBJECTDIR}/src/ui/state.o.d 
-	@${RM} ${OBJECTDIR}/src/ui/state.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/ui/state.c  -o ${OBJECTDIR}/src/ui/state.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/ui/state.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+${OBJECTDIR}/src/drivers/interrupt.o: src/drivers/interrupt.c  .generated_files/flags/default/3e2b40a00bcca8c8f62f1a5e98a1118258ec145a .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/interrupt.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/interrupt.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/interrupt.c  -o ${OBJECTDIR}/src/drivers/interrupt.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/interrupt.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/ui/views.o: src/ui/views.c  .generated_files/flags/default/fef88ea3c7d55363d4fbcc866b217b068f98b9b .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/ui" 
-	@${RM} ${OBJECTDIR}/src/ui/views.o.d 
-	@${RM} ${OBJECTDIR}/src/ui/views.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/ui/views.c  -o ${OBJECTDIR}/src/ui/views.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/ui/views.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+${OBJECTDIR}/src/drivers/lcd.o: src/drivers/lcd.c  .generated_files/flags/default/c6cac3f0b24607e154b405f568aa56e5f6f819c4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/lcd.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/lcd.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/lcd.c  -o ${OBJECTDIR}/src/drivers/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/lcd.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/drivers/led.o: src/drivers/led.c  .generated_files/flags/default/5ab4b461e76ccbdc37c6281db25862a458d09130 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/led.c  -o ${OBJECTDIR}/src/drivers/led.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/led.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/drivers/rtcc.o: src/drivers/rtcc.c  .generated_files/flags/default/b438ecc7e000c3e4cdb44aeb4962f31d5ec3f213 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/rtcc.c  -o ${OBJECTDIR}/src/drivers/rtcc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/rtcc.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/f71ffef8148b542cb2d444eb4d82595c496730b4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src" 
@@ -161,18 +161,36 @@ ${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/f71ffef8148b
 	@${RM} ${OBJECTDIR}/src/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/main.c  -o ${OBJECTDIR}/src/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/drivers/system.o: src/drivers/system.c  .generated_files/flags/default/214fd9e29a782543f297407c188fa06924a5f4b5 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+${OBJECTDIR}/src/drivers/controller.o: src/drivers/controller.c  .generated_files/flags/default/2ca0454761479b1c7a13def3514ee108fddfb82b .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/system.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/system.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/system.c  -o ${OBJECTDIR}/src/drivers/system.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/system.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	@${RM} ${OBJECTDIR}/src/drivers/controller.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/controller.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/controller.c  -o ${OBJECTDIR}/src/drivers/controller.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/controller.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 else
+${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/c560da654865e95be243fbbb6ae543ea78e98662 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
+	@${RM} ${OBJECTDIR}/src/core/alarm.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/core/clock.o: src/core/clock.c  .generated_files/flags/default/89e6b363e93b0d18e41f1d6c22de16fa5afea20a .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/clock.o.d 
+	@${RM} ${OBJECTDIR}/src/core/clock.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/clock.c  -o ${OBJECTDIR}/src/core/clock.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/clock.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 ${OBJECTDIR}/src/core/options.o: src/core/options.c  .generated_files/flags/default/cc6560b6834f47474f03162fba6a5a75e80f69f4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/core" 
 	@${RM} ${OBJECTDIR}/src/core/options.o.d 
 	@${RM} ${OBJECTDIR}/src/core/options.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/options.c  -o ${OBJECTDIR}/src/core/options.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/options.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/core/state.o: src/core/state.c  .generated_files/flags/default/f5df9978375f3f18744a2e6d0e42524f4e365611 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/core" 
+	@${RM} ${OBJECTDIR}/src/core/state.o.d 
+	@${RM} ${OBJECTDIR}/src/core/state.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/state.c  -o ${OBJECTDIR}/src/core/state.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/state.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/core/stopwatch.o: src/core/stopwatch.c  .generated_files/flags/default/d61f43dabc2ce754416f0e00b59068b107e144fc .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/core" 
@@ -180,41 +198,11 @@ ${OBJECTDIR}/src/core/stopwatch.o: src/core/stopwatch.c  .generated_files/flags/
 	@${RM} ${OBJECTDIR}/src/core/stopwatch.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/stopwatch.c  -o ${OBJECTDIR}/src/core/stopwatch.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/stopwatch.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/core/alarm.o: src/core/alarm.c  .generated_files/flags/default/c560da654865e95be243fbbb6ae543ea78e98662 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/core" 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o.d 
-	@${RM} ${OBJECTDIR}/src/core/alarm.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/core/alarm.c  -o ${OBJECTDIR}/src/core/alarm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/core/alarm.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/src/drivers/buttons.o: src/drivers/buttons.c  .generated_files/flags/default/83b81fa94ec676a5a88d330da9db7eb645713e0c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
 	@${RM} ${OBJECTDIR}/src/drivers/buttons.o.d 
 	@${RM} ${OBJECTDIR}/src/drivers/buttons.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/buttons.c  -o ${OBJECTDIR}/src/drivers/buttons.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/buttons.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/lcd.o: src/drivers/lcd.c  .generated_files/flags/default/a8545f7c2af392abc3020311ea87af32cd7951e2 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/lcd.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/lcd.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/lcd.c  -o ${OBJECTDIR}/src/drivers/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/lcd.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/rtcc.o: src/drivers/rtcc.c  .generated_files/flags/default/88c0b668e9d4c42d38d960d0fa16865c33c942b6 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/rtcc.c  -o ${OBJECTDIR}/src/drivers/rtcc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/rtcc.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/interrupts.o: src/drivers/interrupts.c  .generated_files/flags/default/5f0bf70257108319c6abfaa70447337ebc265bd3 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/interrupts.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/interrupts.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/interrupts.c  -o ${OBJECTDIR}/src/drivers/interrupts.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/interrupts.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/src/drivers/led.o: src/drivers/led.c  .generated_files/flags/default/970664260a633ccfde87ab66d01a507adc70936 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/led.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/led.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/led.c  -o ${OBJECTDIR}/src/drivers/led.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/led.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/drivers/eeprom.o: src/drivers/eeprom.c  .generated_files/flags/default/f4776f1839bbd74b6ec90646fc596fc2b5b4958c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
@@ -222,17 +210,29 @@ ${OBJECTDIR}/src/drivers/eeprom.o: src/drivers/eeprom.c  .generated_files/flags/
 	@${RM} ${OBJECTDIR}/src/drivers/eeprom.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/eeprom.c  -o ${OBJECTDIR}/src/drivers/eeprom.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/eeprom.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/ui/state.o: src/ui/state.c  .generated_files/flags/default/bd08df044493c1388257d45404a81e6d92777017 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/ui" 
-	@${RM} ${OBJECTDIR}/src/ui/state.o.d 
-	@${RM} ${OBJECTDIR}/src/ui/state.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/ui/state.c  -o ${OBJECTDIR}/src/ui/state.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/ui/state.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+${OBJECTDIR}/src/drivers/interrupt.o: src/drivers/interrupt.c  .generated_files/flags/default/4abe408f1f8878d5642844a43a4f6fbd79da8629 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/interrupt.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/interrupt.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/interrupt.c  -o ${OBJECTDIR}/src/drivers/interrupt.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/interrupt.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/ui/views.o: src/ui/views.c  .generated_files/flags/default/44f7e066c0a11c87666635b52b907f31cf68dc0a .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
-	@${MKDIR} "${OBJECTDIR}/src/ui" 
-	@${RM} ${OBJECTDIR}/src/ui/views.o.d 
-	@${RM} ${OBJECTDIR}/src/ui/views.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/ui/views.c  -o ${OBJECTDIR}/src/ui/views.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/ui/views.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+${OBJECTDIR}/src/drivers/lcd.o: src/drivers/lcd.c  .generated_files/flags/default/a8545f7c2af392abc3020311ea87af32cd7951e2 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/lcd.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/lcd.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/lcd.c  -o ${OBJECTDIR}/src/drivers/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/lcd.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/drivers/led.o: src/drivers/led.c  .generated_files/flags/default/970664260a633ccfde87ab66d01a507adc70936 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/led.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/led.c  -o ${OBJECTDIR}/src/drivers/led.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/led.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/src/drivers/rtcc.o: src/drivers/rtcc.c  .generated_files/flags/default/88c0b668e9d4c42d38d960d0fa16865c33c942b6 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}/src/drivers" 
+	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/rtcc.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/rtcc.c  -o ${OBJECTDIR}/src/drivers/rtcc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/rtcc.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 ${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/316423bc2eeb98761b4051a3747b84ec984be183 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src" 
@@ -240,11 +240,11 @@ ${OBJECTDIR}/src/main.o: src/main.c  .generated_files/flags/default/316423bc2eeb
 	@${RM} ${OBJECTDIR}/src/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/main.c  -o ${OBJECTDIR}/src/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/main.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/src/drivers/system.o: src/drivers/system.c  .generated_files/flags/default/584ae2d9107556fa28b45cb10e6adb7102959371 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+${OBJECTDIR}/src/drivers/controller.o: src/drivers/controller.c  .generated_files/flags/default/8becd8697bfaf4c7623ff75e41fb10df53890aa4 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}/src/drivers" 
-	@${RM} ${OBJECTDIR}/src/drivers/system.o.d 
-	@${RM} ${OBJECTDIR}/src/drivers/system.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/system.c  -o ${OBJECTDIR}/src/drivers/system.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/system.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	@${RM} ${OBJECTDIR}/src/drivers/controller.o.d 
+	@${RM} ${OBJECTDIR}/src/drivers/controller.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/drivers/controller.c  -o ${OBJECTDIR}/src/drivers/controller.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/src/drivers/controller.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 

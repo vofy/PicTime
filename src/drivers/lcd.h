@@ -2,7 +2,7 @@
 #define	LCD_H
 
 #include <xc.h>
-#include "system.h"
+#include "controller.h"
 
 #define LCD_E			LATDbits.LATD4	
 #define LCD_TRIS_E		TRISDbits.TRISD4

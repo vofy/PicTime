@@ -1,13 +1,16 @@
 #include <xc.h>
-#include "system.h"
+
+#include "controller.h"
 #include "led.h"
 #include "buttons.h"
 #include "lcd.h"
 #include "eeprom.h"
 #include "rtcc.h"
-#include "interrupts.h"
-#include "../ui/state.h"
+#include "interrupt.h"
+
+#include "../core/clock.h"
 #include "../core/alarm.h"
+#include "../core/state.h"
 
 void device_init(void)
 {
@@ -19,7 +22,10 @@ void device_init(void)
     lcd_init();
     eeprom_init();
     rtcc_init();
+    
+    clock_init();
     timer_init();
     alarm_init();
+    
     state_init();
 }

@@ -17,7 +17,7 @@ typedef enum {
 
 void led_init(void);
 void led_set(Led led, bool state);
-void led_toggle(Led led);
 void led_set_all(bool state);
+void led_toggle(Led led);
 
 #endif

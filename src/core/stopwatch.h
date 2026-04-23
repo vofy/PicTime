@@ -18,5 +18,6 @@ void stopwatch_tick(void);
 void stopwatch_handle_key(Button button);
 uint32_t stopwatch_get_time(void);
 bool stopwatch_is_running(void);
+void stopwatch_draw_screen(void);
 
 #endif

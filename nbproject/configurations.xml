@@ -6,22 +6,20 @@
                    projectFiles="true">
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="core" displayName="core" projectFiles="true">
-          <itemPath>src/core/options.h</itemPath>
-          <itemPath>src/core/stopwatch.h</itemPath>
           <itemPath>src/core/alarm.h</itemPath>
+          <itemPath>src/core/clock.h</itemPath>
+          <itemPath>src/core/options.h</itemPath>
+          <itemPath>src/core/state.h</itemPath>
+          <itemPath>src/core/stopwatch.h</itemPath>
         </logicalFolder>
         <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
-          <itemPath>src/drivers/rtcc.h</itemPath>
           <itemPath>src/drivers/buttons.h</itemPath>
-          <itemPath>src/drivers/lcd.h</itemPath>
-          <itemPath>src/drivers/interrupts.h</itemPath>
-          <itemPath>src/drivers/led.h</itemPath>
           <itemPath>src/drivers/eeprom.h</itemPath>
-          <itemPath>src/drivers/system.h</itemPath>
-        </logicalFolder>
-        <logicalFolder name="ui" displayName="ui" projectFiles="true">
-          <itemPath>src/ui/state.h</itemPath>
-          <itemPath>src/ui/views.h</itemPath>
+          <itemPath>src/drivers/interrupt.h</itemPath>
+          <itemPath>src/drivers/lcd.h</itemPath>
+          <itemPath>src/drivers/led.h</itemPath>
+          <itemPath>src/drivers/rtcc.h</itemPath>
+          <itemPath>src/drivers/controller.h</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
@@ -40,22 +38,20 @@
                    projectFiles="true">
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="core" displayName="core" projectFiles="true">
-          <itemPath>src/core/options.c</itemPath>
-          <itemPath>src/core/stopwatch.c</itemPath>
           <itemPath>src/core/alarm.c</itemPath>
+          <itemPath>src/core/clock.c</itemPath>
+          <itemPath>src/core/options.c</itemPath>
+          <itemPath>src/core/state.c</itemPath>
+          <itemPath>src/core/stopwatch.c</itemPath>
         </logicalFolder>
         <logicalFolder name="drivers" displayName="drivers" projectFiles="true">
           <itemPath>src/drivers/buttons.c</itemPath>
-          <itemPath>src/drivers/lcd.c</itemPath>
-          <itemPath>src/drivers/rtcc.c</itemPath>
-          <itemPath>src/drivers/interrupts.c</itemPath>
-          <itemPath>src/drivers/led.c</itemPath>
           <itemPath>src/drivers/eeprom.c</itemPath>
-          <itemPath>src/drivers/system.c</itemPath>
-        </logicalFolder>
-        <logicalFolder name="ui" displayName="ui" projectFiles="true">
-          <itemPath>src/ui/state.c</itemPath>
-          <itemPath>src/ui/views.c</itemPath>
+          <itemPath>src/drivers/interrupt.c</itemPath>
+          <itemPath>src/drivers/lcd.c</itemPath>
+          <itemPath>src/drivers/led.c</itemPath>
+          <itemPath>src/drivers/rtcc.c</itemPath>
+          <itemPath>src/drivers/controller.c</itemPath>
         </logicalFolder>
         <itemPath>src/main.c</itemPath>
       </logicalFolder>

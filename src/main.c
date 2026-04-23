@@ -1,16 +1,18 @@
 #include <xc.h>
-#include "drivers/system.h"
+
+#include "drivers/controller.h"
 #include "drivers/rtcc.h"
 #include "drivers/lcd.h"
 #include "drivers/buttons.h"
-#include "drivers/interrupts.h"
+#include "drivers/interrupt.h"
 #include "drivers/led.h"
 #include "drivers/eeprom.h"
-#include "ui/state.h"
-#include "ui/views.h"
+
+#include "core/state.h"
+#include "core/clock.h"
+#include "core/options.h"
 #include "core/stopwatch.h"
 #include "core/alarm.h"
-#include "core/options.h"
 
 // CONFIG1
 #pragma config JTAGEN = OFF     // JTAG Port Enable (Disabled)
@@ -27,18 +29,7 @@
 int main(void)
 {
     device_init();
-
-    struct tm start_time = {
-        .tm_year = 2026,
-        .tm_mon  = 3,
-        .tm_mday = 19,
-        .tm_hour = 23,
-        .tm_min  = 59,
-        .tm_sec  = 55,
-        .tm_wday = 3
-    };
-
-    rtcc_set_time(&start_time);
+    clock_init();
     
     while (1)
     {
@@ -47,23 +38,22 @@ int main(void)
         // Screen needs redraw
         switch(state_get_current()) {
             case STATE_CLOCK:
-                draw_screen_clock();
+                clock_draw_screen();
                 break;
 
             case STATE_STOPWATCH:
                 if (stopwatch_state_get_current() == SW_RUN)
-                    draw_screen_stopwatch();
+                    stopwatch_draw_screen();
                 break;
             
             case STATE_OPTIONS:
-                draw_screen_options();
+                options_draw_screen();
                 break;
 
             default:
                 break;
         }
     }
-        
-
+    
     return 0;
 }

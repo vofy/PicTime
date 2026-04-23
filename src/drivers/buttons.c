@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 #include "buttons.h"
-#include "../ui/state.h"
+#include "../core/state.h"
 
 static bool buttons_state[4] = {false, false, false, false};   // debounced state
 static bool buttons_last[4]  = {false, false, false, false};   // previous state
@@ -19,7 +19,7 @@ void buttons_init(void)
     TRISDbits.TRISD13 = 1; // S4
 }
 
-void buttons_tick(void)
+void buttons_debounce_tick(void)
 {
     for (uint8_t i = 0; i < 4; i++)
     {

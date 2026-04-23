@@ -81,7 +81,7 @@ void eeprom_write_byte(uint16_t addr, uint8_t data)
     spi_transfer(CMD_WREN);
     CS_HIGH();
 
-    __delay_us(1); // small safety delay
+    __delay_us(1);
 
     // Write
     CS_LOW();

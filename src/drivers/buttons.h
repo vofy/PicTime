@@ -17,7 +17,7 @@ typedef enum {
 #define S4 PORTDbits.RD13
 
 void buttons_init(void);
-void buttons_tick(void);
+void buttons_debounce_tick(void);
 void buttons_check_state(void);
 
 #endif

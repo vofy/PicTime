@@ -3,7 +3,7 @@
 
 void lcd_init()
 {
-	//ports LCD
+	// LCD ports
 	LCD_DATA &= 0xFF00;
 	LCD_E = 0;
 	LCD_RW = 0;
@@ -14,23 +14,20 @@ void lcd_init()
 	LCD_TRIS_RS = 0;
 	__delay_ms(15);		
 	
-	// 1st
 	LCD_DATA &= 0xFF00;
 	LCD_DATA |= 0x0038;
 	LCD_CLK;
  	__delay_ms(5);
 	
-	// 2nd
 	LCD_DATA &= 0xFF00;
 	LCD_DATA |= 0x0038;
 	LCD_CLK;
   	__delay_us(150);
 
-	// 3rd
-	lcd_cmd(0x38);		// function set: 8bit,2lines display,5x8dots/char
-	lcd_cmd(0x0C);		// display On/Off: display On, cursor Off,Blink Off
-	lcd_cmd(0x06);		// entry mode set:DDRAM++
-	lcd_cmd(0x01);		// clear display
+	lcd_cmd(0x38);		// 8 bit, 2 lines display, 5x8dots/char
+	lcd_cmd(0x0C);		// Display On, cursor Off, Blink Off
+	lcd_cmd(0x06);		// Entry mode set: DDRAM++
+	lcd_cmd(0x01);		// Clear display
 }
 
 void lcd_cmd(unsigned char cmd)
@@ -64,12 +61,12 @@ void lcd_write_char(unsigned char data)
 
 void lcd_home()
 {
-	lcd_cmd(0x02);			// return home
+	lcd_cmd(0x02);
 }
 
 void lcd_clear()
 {
-	lcd_cmd(0x01);			// return home
+	lcd_cmd(0x01);
 }
 
 void lcd_write_line(unsigned int row, const char *str)

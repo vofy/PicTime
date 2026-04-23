@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "rtcc.h"
 
-const char* weekday_strings[7] = { "Ne", "Po", "Ut", "St", "Ct", "Pa", "So" };
-
 static int bcd2dec(unsigned int bcd)
 {
     return ((bcd >> 4) * 10) + (bcd & 0x0F);
@@ -25,31 +23,38 @@ void rtcc_init(void)
     __builtin_write_RTCWEN();
     RCFGCALbits.RTCEN = 1;
     RCFGCALbits.RTCWREN = 0;
+
+    // Enable RTCC Interrupt
+    IFS3bits.RTCIF = 0;
+    IEC3bits.RTCIE = 1;
+
+    TRISDbits.TRISD0 = 0;
+    LATDbits.LATD0 = 0;
 }
 
 void rtcc_get_time(struct tm *t)
 {
     unsigned int val;
 
-    // seconds + minutes
+    // Seconds + minutes
     RCFGCALbits.RTCPTR = 0b00;
     val = RTCVAL;
     t->tm_sec = bcd2dec(val & 0xFF);
     t->tm_min = bcd2dec((val >> 8) & 0xFF);
 
-    // weekday + hours
+    // Weekday + hours
     RCFGCALbits.RTCPTR = 0b01;
     val = RTCVAL;
     t->tm_hour = bcd2dec(val & 0xFF);
     t->tm_wday = bcd2dec((val >> 8) & 0xFF);
 
-    // day + month
+    // Day + month
     RCFGCALbits.RTCPTR = 0b10;
     val = RTCVAL;
     t->tm_mday = bcd2dec(val & 0xFF);
     t->tm_mon  = bcd2dec((val >> 8) & 0xFF);
 
-    // year (assume 2000?2099)
+    // Year
     RCFGCALbits.RTCPTR = 0b11;
     val = RTCVAL;
     t->tm_year = bcd2dec(val & 0xFF) + 100;
@@ -61,29 +66,23 @@ void rtcc_get_time(struct tm *t)
 
 void rtcc_set_time(struct tm *t)
 {
-    unsigned int val;
-
     __builtin_write_RTCWEN();
 
-    // seconds + minutes
+    // Seconds + minutes
     RCFGCALbits.RTCPTR = 0b00;
-    val = (dec2bcd(t->tm_min) << 8) | dec2bcd(t->tm_sec);
-    RTCVAL = val;
+    RTCVAL = (dec2bcd(t->tm_min) << 8) | dec2bcd(t->tm_sec);
 
-    // weekday + hours
+    // Weekday + hours
     RCFGCALbits.RTCPTR = 0b01;
-    val = (dec2bcd(t->tm_wday) << 8) | dec2bcd(t->tm_hour);
-    RTCVAL = val;
+    RTCVAL = (dec2bcd(t->tm_wday) << 8) | dec2bcd(t->tm_hour);
 
-    // day + month
+    // Day + month
     RCFGCALbits.RTCPTR = 0b10;
-    val = (dec2bcd(t->tm_mon) << 8) | dec2bcd(t->tm_mday);
-    RTCVAL = val;
+    RTCVAL = (dec2bcd(t->tm_mon) << 8) | dec2bcd(t->tm_mday);
 
-    // year (two digits)
+    // Year
     RCFGCALbits.RTCPTR = 0b11;
-    val = dec2bcd((t->tm_year + 1900) % 100);
-    RTCVAL = val;
+    RTCVAL = dec2bcd((t->tm_year + 1900) % 100);
 
     RCFGCALbits.RTCWREN = 0;
 }
@@ -93,16 +92,18 @@ void rtcc_set_alarm(const HrMin *t)
     __builtin_write_RTCWEN();
     ALCFGRPTbits.ALRMEN = 0; 
     
-    // minutes + seconds
+    // Minutes + seconds
     ALCFGRPTbits.ALRMPTR = 0b00;
     ALRMVAL = (dec2bcd(t->min) << 8); 
 
-    // hours
+    // Hours
     ALCFGRPTbits.ALRMPTR = 0b01;
     ALRMVAL = dec2bcd(t->hour);
 
-    ALCFGRPTbits.AMASK = 0b0010; // Daily match
-    ALCFGRPTbits.CHIME = 1;
+    ALCFGRPTbits.AMASK = 0b0110; // Daily match (Match: Hour, Min, Sec)
+    ALCFGRPTbits.ARPT  = 0xFF;   // Repeat 255 times
+    ALCFGRPTbits.CHIME = 1;      // Enable rollover for infinite repeat
+    
     RCFGCALbits.RTCWREN = 0;
 }
 
@@ -111,21 +112,4 @@ void rtcc_set_alarm_enabled(bool enabled)
     __builtin_write_RTCWEN();
     ALCFGRPTbits.ALRMEN = enabled ? 1 : 0;
     RCFGCALbits.RTCWREN = 0;
-}
-
-const char *rtcc_weekday_str(struct tm *t)
-{
-    return weekday_strings[t->tm_wday];
-}
-
-const int rtcc_week_number(struct tm *t)
-{
-    struct tm tmp = *t;
-    time_t ts = mktime(&tmp);
-    struct tm *pt = localtime(&ts);
-
-    char buf[3];
-    strftime(buf, sizeof(buf), "%V", pt); // ISO week number
-
-    return atoi(buf);
 }

@@ -1,7 +1,7 @@
 #ifndef EEPROM_H
 #define EEPROM_H
 
-#include "system.h"
+#include "controller.h"
 #include <xc.h>
 
 #include <stdint.h>
@@ -22,14 +22,9 @@
 
 #define STATUS_WIP 0x01
 
-// Init
 void eeprom_init(void);
-
-// Single byte
 uint8_t eeprom_read_byte(uint16_t addr);
 void    eeprom_write_byte(uint16_t addr, uint8_t data);
-
-// Multi-byte
 void eeprom_read(uint16_t addr, void *buf, size_t len);
 void eeprom_write(uint16_t addr, const void *buf, size_t len);
 
